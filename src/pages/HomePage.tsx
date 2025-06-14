@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExplorationMode } from '../types';
 import { samplePlaces, sampleActivities, sampleEvents } from '../data/samples';
+import ChatbotWidget from '../components/ChatbotWidget';
 
 interface HomePageProps {
   mode: ExplorationMode;
@@ -174,6 +175,9 @@ const HomePage: React.FC<HomePageProps> = ({ mode }) => {
           ))}
         </div>
       </section>
+
+      {/* Chatbot Widget */}
+      <ChatbotWidget />
     </div>
   );
 };

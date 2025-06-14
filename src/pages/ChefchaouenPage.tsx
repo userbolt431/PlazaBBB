@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Utensils, Building2, Car, ShoppingBag, Hotel, Calendar, ChevronRight, Info, History, Sun, Cloud, Star, Coffee, Map, Clock, MessageSquare, ThumbsUp, MessageCircle, Share2, MoreHorizontal } from 'lucide-react';
 import { samplePlaces, sampleActivities, sampleEvents } from '../data/samples';
+import ChatbotWidget from '../components/ChatbotWidget';
 
 const images = [
   'https://bluedoorcuisine.com/wp-content/uploads/2023/03/milad-alizadeh-JibMa0FbyHw-unsplash-scaled.jpg',
@@ -702,6 +703,9 @@ const ChefchaouenPage: React.FC = () => {
           {renderContent()}
         </div>
       </div>
+
+      {/* Chatbot Widget */}
+      <ChatbotWidget />
     </div>
   );
 };
