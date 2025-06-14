@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExplorationMode } from '../types';
 import { samplePlaces, sampleActivities, sampleEvents } from '../data/samples';
 import ChatbotWidget from '../components/ChatbotWidget';
@@ -8,6 +9,8 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ mode }) => {
+  const navigate = useNavigate();
+
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -23,6 +26,19 @@ const HomePage: React.FC<HomePageProps> = ({ mode }) => {
     }).format(amount);
   };
 
+  const handlePlaceClick = (place: any) => {
+    if (place.location.city === 'Chefchaouen') {
+      navigate('/africa/morocco/chefchaouen');
+    }
+  };
+
+  const getPlaceImage = (place: any) => {
+    if (place.location.city === 'Chefchaouen') {
+      return 'https://bluedoorcuisine.com/wp-content/uploads/2023/03/milad-alizadeh-JibMa0FbyHw-unsplash-scaled.jpg';
+    }
+    return place.media?.images[0];
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 space-y-12">
       {/* Trending Places */}
@@ -35,10 +51,18 @@ const HomePage: React.FC<HomePageProps> = ({ mode }) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {samplePlaces.slice(0, 3).map(place => (
-            <div key={place.id} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div 
+              key={place.id} 
+              className={`bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${
+                place.location.city === 'Chefchaouen' 
+                  ? 'cursor-pointer hover:-translate-y-1 hover:shadow-lg' 
+                  : ''
+              }`}
+              onClick={() => handlePlaceClick(place)}
+            >
               <div className="relative h-48">
                 <img 
-                  src={place.media?.images[0]}
+                  src={getPlaceImage(place)}
                   alt={place.name}
                   className="w-full h-full object-cover"
                 />
@@ -48,6 +72,11 @@ const HomePage: React.FC<HomePageProps> = ({ mode }) => {
                     {place.location.city}, {place.location.country}
                   </p>
                 </div>
+                {place.location.city === 'Chefchaouen' && (
+                  <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                    Explore →
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <p className="text-slate-600 text-sm mb-3 line-clamp-2">
